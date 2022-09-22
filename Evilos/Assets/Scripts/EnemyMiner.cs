@@ -11,6 +11,8 @@ public class EnemyMiner : MonoBehaviour
     private float lastAttack = 0;
     private float damage = 10;
     private Home home;
+    private float health = 100;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -21,18 +23,35 @@ public class EnemyMiner : MonoBehaviour
         {
             Debug.Log("Home not found");
         }
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+        if (gameManager == null)
+        {
+            Debug.Log("Game manager missing");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!homeReached)
+        CheckForGameStart();
+        if (health > 0 && gameManager.gameRunning)
         {
-            Move();
+            if (!homeReached)
+            {
+                Move();
+            }
+            else
+            {
+                Attack();
+            }
         }
-        else
+    }
+
+    void CheckForGameStart()
+    {
+        if (gameManager.gameRunning)
         {
-            Attack();
+            animator.SetTrigger("GameStart");
         }
     }
 
@@ -40,6 +59,7 @@ public class EnemyMiner : MonoBehaviour
     {
         if (lastAttack + attackSpeed < Time.time)
         {
+            
             animator.SetTrigger("Attack");
             lastAttack = Time.time;
         }
@@ -48,7 +68,10 @@ public class EnemyMiner : MonoBehaviour
 
     private void DamageHome()
     {
-        home.TakeDamage(damage);
+        if (home.health > 0)
+        {
+            home.TakeDamage(damage);
+        }
     }
 
     private void Move()
@@ -74,13 +97,14 @@ public class EnemyMiner : MonoBehaviour
         }
     }
 
-
-
-
-    //void OnAnimatorMove()
-    //{
-    //    Debug.Log("Moving");
-    //    transform.Translate(Vector2.right* speed * Time.deltaTime);
-    //}
-
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+            gameObject.tag = "Untagged";
+            animator.SetTrigger("Die");
+        }
+    }
 }

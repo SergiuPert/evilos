@@ -20,15 +20,22 @@ public class Home : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        Debug.Log("took " + damage + " damage");
-        Death();
+        if (health <= 0)
+        {
+            Death();
+        }
     }
 
     void Death()
     {
-        if (health <= 0)
+        GameManager gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        if (gameManager != null)
         {
-            Debug.Log("ded");
+            gameManager.Lose();
+        }
+        else
+        {
+            Debug.Log("Game manager mising");
         }
     }
 }
