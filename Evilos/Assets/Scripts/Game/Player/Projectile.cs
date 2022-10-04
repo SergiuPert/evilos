@@ -1,17 +1,21 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileMover2D : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
-    public float speed = 15f;
-    public float hitOffset = 0f;
-    public bool UseFirePointRotation;
-    public Vector3 rotationOffset = new Vector3(0, 0, 0);
-    public GameObject hit;
-    public GameObject flash;
+    [SerializeField]
+    private float speed = 15f;
+    [SerializeField]
+    private float hitOffset = 0f;
+    [SerializeField]
+    private GameObject hit;
+    [SerializeField]
+    private GameObject flash;
     private Rigidbody2D rb;
-    public GameObject[] Detached;
+    [SerializeField]
+    private GameObject[] Detached;
+    [SerializeField]
     private float damage = 50;
 
 
@@ -23,7 +27,7 @@ public class ProjectileMover2D : MonoBehaviour
             //Instantiate flash effect on projectile position
             var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
             flashInstance.transform.forward = gameObject.transform.forward;
-            
+
             //Destroy flash effect depending on particle Duration time
             var flashPs = flashInstance.GetComponent<ParticleSystem>();
             if (flashPs != null)
@@ -36,19 +40,17 @@ public class ProjectileMover2D : MonoBehaviour
                 Destroy(flashInstance, flashPsParts.main.duration);
             }
         }
-        Destroy(gameObject,20);
-	}
+        Destroy(gameObject, 20);
+    }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {
-		if (speed != 0)
+        if (speed != 0)
         {
-            rb.velocity = transform.forward * speed;
-            //transform.position += transform.forward * (speed * Time.deltaTime);         
+            rb.velocity = transform.forward * speed;     
         }
-	}
+    }
 
-    //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -64,18 +66,10 @@ public class ProjectileMover2D : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             speed = 0;
 
-            //ContactPoint2D contact = collision.contacts[0];
-            //Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            //Vector3 pos = contact.point + contact.normal * hitOffset;
-
             //Spawn hit effect on collision
             if (hit != null)
             {
                 var hitInstance = Instantiate(hit, transform.position, transform.rotation);
-                //var hitInstance = Instantiate(hit, pos, rot);
-                //if (UseFirePointRotation) { hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); }
-                //else if (rotationOffset != Vector3.zero) { hitInstance.transform.rotation = Quaternion.Euler(rotationOffset); }
-                //else { hitInstance.transform.LookAt(contact.point + contact.normal); }
 
                 //Destroy hit effects depending on particle Duration time
                 var hitPs = hitInstance.GetComponent<ParticleSystem>();

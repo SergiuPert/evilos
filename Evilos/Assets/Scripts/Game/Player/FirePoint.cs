@@ -6,21 +6,12 @@ public class FirePoint : MonoBehaviour
 {
     [SerializeField]
     private Camera Cam;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-
         if (Cam != null)
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.rotation = Quaternion.LookRotation(mousePos - transform.position);
+            transform.rotation = Quaternion.LookRotation(mousePos - transform.position); // might have to make a function out of this and call it from the player before shooting
         }
         else
         {

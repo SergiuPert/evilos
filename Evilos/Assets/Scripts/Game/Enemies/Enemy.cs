@@ -2,41 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMiner : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
+    [SerializeField]
     private float speed = 4;
-    private bool homeReached = false;
-    private Animator animator;
+    protected bool inRange = false;
+    protected Animator animator;
+    [SerializeField]
     private float attackSpeed = 1;
     private float lastAttack = 0;
+    [SerializeField]
     private float damage = 10;
-    private Home home;
+    [SerializeField]
     private float health = 100;
-    private GameManager gameManager;
-
+    [SerializeField]
+    private int goldValue = 10;
+    //[SerializeField]
+    private Home home;
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         animator = GetComponent<Animator>();
+    }
+
+    void Start()
+    {
+        //animator.SetTrigger("GameStop");
+        //GameUIManager.startGame += StartGame;
         home = GameObject.Find("Home").GetComponent<Home>();
         if (home == null)
         {
             Debug.Log("Home not found");
-        }
-        gameManager = GameObject.FindObjectOfType<GameManager>();
-        if (gameManager == null)
-        {
-            Debug.Log("Game manager missing");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckForGameStart();
-        if (health > 0 && gameManager.gameRunning)
+        if (health > 0 && GameManager.Instance.gameRunning)
         {
-            if (!homeReached)
+            if (!inRange)
             {
                 Move();
             }
@@ -47,24 +53,30 @@ public class EnemyMiner : MonoBehaviour
         }
     }
 
-    void CheckForGameStart()
+    private void StartGame()
     {
-        if (gameManager.gameRunning)
-        {
-            animator.SetTrigger("GameStart");
-        }
+        ////animator = GetComponent<Animator>();
+        //if (animator == null)
+        //{
+        //    Debug.Log(this);
+        //    animator = GetComponentInChildren<Animator>();
+        //}
+        //Debug.Log(animator);
+        animator.SetTrigger("GameStart");
+        //Debug.Log("Second");
     }
-
+    private void StopGame()
+    {
+        animator.SetTrigger("GameStop");
+    }
     private void Attack()
     {
         if (lastAttack + attackSpeed < Time.time)
         {
-            
             animator.SetTrigger("Attack");
             lastAttack = Time.time;
         }
     }
-
 
     private void DamageHome()
     {
@@ -78,25 +90,6 @@ public class EnemyMiner : MonoBehaviour
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Home"))
-        {
-            homeReached = true;
-            animator.SetBool("Walking", false);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Home"))
-        {
-            homeReached = false;
-            animator.SetBool("Walking", true);
-        }
-    }
-
     public void TakeDamage(float damage)
     {
         health -= damage;

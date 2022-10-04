@@ -9,10 +9,7 @@ public class Player : MonoBehaviour
     private GameObject[] magicMissiles;
     [SerializeField]
     private Transform firePoint;
-    [SerializeField]
-    private int missileIndex = 0;
     private Animator animator;
-    GameManager gameManager;
     //[SerializeField]
     //private GameObject[] magicMissiles;
 
@@ -20,17 +17,12 @@ public class Player : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        gameManager = GameObject.FindObjectOfType<GameManager>();
-        if (gameManager == null)
-        {
-            Debug.Log("Game manager missing");
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && gameManager.gameRunning)
+        if (Input.GetButtonDown("Fire1") && GameManager.Instance.gameRunning)
         {
             Attack();
         }
@@ -39,6 +31,6 @@ public class Player : MonoBehaviour
     void Attack()
     {
         animator.SetTrigger("Attack");
-        Instantiate(magicMissiles[missileIndex], firePoint.position, firePoint.rotation);
+        Instantiate(magicMissiles[GameManager.Instance.missileIndex], firePoint.position, firePoint.rotation);
     }
 }
