@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dialogue : MonoBehaviour
 {
-    private int dialogueIndex = 0;
+    private int dialogueIndex = 1;
     public void NextDialogue()
     {
         gameObject.transform.GetChild(dialogueIndex).gameObject.SetActive(false);
@@ -15,6 +15,7 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
+            gameObject.transform.GetChild(0).gameObject.SetActive(false);
             GameUIManager.Instance.GameStart();
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,17 +15,19 @@ public class GameUIManager : MonoBehaviour
     public static event StopGame stopGame;
 
     [SerializeField]
-    private GameObject[] maps;
+    private GameObject[] maps; // or tilemaps
     [SerializeField]
     private GameObject[] dialoguesForLevel;
-    private GameObject dialogues;
     [SerializeField]
     private GameObject winPanel;
     [SerializeField]
     private GameObject losePanel;
-
     [SerializeField]
-    private int gold = 0;
+    private TextMeshProUGUI goldText;
+    [SerializeField]
+    private TextMeshProUGUI healthText;
+
+    private int goldEarned = 0;
 
     private void Awake()
     {
@@ -48,13 +51,24 @@ public class GameUIManager : MonoBehaviour
                 return;
             }
         }
-        dialogues = Instantiate(dialoguesForLevel[GameManager.Instance.levelIndex]);
+        GameObject dialogues = Instantiate(dialoguesForLevel[GameManager.Instance.levelIndex]);
         dialogues.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform,false);
     }
 
     private void Update()
     {
         CheckForWin();
+    }
+
+    public void UpdateGold(int goldValue)
+    {
+        goldEarned += goldValue;
+        goldText.text = "Gold: " + goldEarned;
+    }
+
+    public void UpdateHealth(int health)
+    {
+        healthText.text = "Health " + health;
     }
 
     public void Lose()
@@ -71,8 +85,9 @@ public class GameUIManager : MonoBehaviour
             GameObject lastEnemy = GameObject.FindGameObjectWithTag("Enemy");
             if (lastEnemy == null)
             {
-                GameManager.Instance.gameRunning = false;
+                GameStop();
                 winPanel.SetActive(true);
+                GameManager.Instance.gold += goldEarned;
             }
         }
     }
@@ -85,6 +100,7 @@ public class GameUIManager : MonoBehaviour
 
     public void GameStop()
     {
+        GameManager.Instance.gameRunning = false;
         stopGame();
     }
 
@@ -92,7 +108,7 @@ public class GameUIManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-
+    //to reset the events
     private void OnDestroy()
     {
         startGame = null;

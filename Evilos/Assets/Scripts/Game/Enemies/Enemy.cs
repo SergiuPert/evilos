@@ -6,18 +6,20 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float speed = 4;
-    protected bool inRange = false;
-    protected Animator animator;
     [SerializeField]
     private float attackSpeed = 1;
-    private float lastAttack = 0;
     [SerializeField]
     private float damage = 10;
     [SerializeField]
     private float health = 100;
     [SerializeField]
     private int goldValue = 10;
+
+    protected bool inRange = false;
+    protected Animator animator;
     private Home home;
+    private float lastAttack = 0;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -65,7 +67,7 @@ public class Enemy : MonoBehaviour
 
     private void DamageHome()
     {
-        if (home.health > 0)
+        if (inRange)
         {
             home.TakeDamage(damage);
         }
@@ -83,6 +85,7 @@ public class Enemy : MonoBehaviour
             gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
             gameObject.tag = "Untagged";
             animator.SetTrigger("Die");
+            GameUIManager.Instance.UpdateGold(goldValue);
         }
     }
 }

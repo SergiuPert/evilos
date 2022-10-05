@@ -12,11 +12,12 @@ public class Projectile : MonoBehaviour
     private GameObject hit;
     [SerializeField]
     private GameObject flash;
-    private Rigidbody2D rb;
     [SerializeField]
     private GameObject[] Detached;
     [SerializeField]
     private float damage = 50;
+
+    private Rigidbody2D rb;
 
 
     void Start()
