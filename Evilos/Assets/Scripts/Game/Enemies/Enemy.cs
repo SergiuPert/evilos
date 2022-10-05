@@ -17,19 +17,12 @@ public class Enemy : MonoBehaviour
     private float health = 100;
     [SerializeField]
     private int goldValue = 10;
-    //[SerializeField]
     private Home home;
-    // Start is called before the first frame update
-
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
-
     void Start()
     {
-        //animator.SetTrigger("GameStop");
-        //GameUIManager.startGame += StartGame;
+        animator = GetComponent<Animator>();
+        GameUIManager.startGame += StartGame;
+        GameUIManager.stopGame += StopGame;
         home = GameObject.Find("Home").GetComponent<Home>();
         if (home == null)
         {
@@ -53,17 +46,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void StartGame()
+    public void StartGame()
     {
-        ////animator = GetComponent<Animator>();
-        //if (animator == null)
-        //{
-        //    Debug.Log(this);
-        //    animator = GetComponentInChildren<Animator>();
-        //}
-        //Debug.Log(animator);
         animator.SetTrigger("GameStart");
-        //Debug.Log("Second");
     }
     private void StopGame()
     {

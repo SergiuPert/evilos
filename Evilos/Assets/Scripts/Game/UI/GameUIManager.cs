@@ -7,8 +7,11 @@ public class GameUIManager : MonoBehaviour
 {
     public static GameUIManager Instance;
 
-    //public delegate void StartGame();
-    //public static event StartGame startGame;
+    public delegate void StartGame();
+    public static event StartGame startGame;
+
+    public delegate void StopGame();
+    public static event StopGame stopGame;
 
     [SerializeField]
     private GameObject[] maps;
@@ -20,10 +23,14 @@ public class GameUIManager : MonoBehaviour
     [SerializeField]
     private GameObject losePanel;
 
+    [SerializeField]
+    private int gold = 0;
+
     private void Awake()
     {
         if (Instance != null)
         {
+            Debug.Log("destroyed");
             Destroy(gameObject);
             return;
         }
@@ -34,12 +41,12 @@ public class GameUIManager : MonoBehaviour
     {
         if (dialoguesForLevel[GameManager.Instance.levelIndex].transform.childCount <= 0)
         {
-            //startGame += GameStart;
-            //if (startGame != null)
-            //{
+            startGame += GameStart;
+            if (startGame != null)
+            {
                 GameStart();
                 return;
-            //}
+            }
         }
         dialogues = Instantiate(dialoguesForLevel[GameManager.Instance.levelIndex]);
         dialogues.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform,false);
@@ -53,6 +60,7 @@ public class GameUIManager : MonoBehaviour
     public void Lose()
     {
         GameManager.Instance.gameRunning = false;
+        GameStop();
         losePanel.SetActive(true);
     }
 
@@ -72,11 +80,22 @@ public class GameUIManager : MonoBehaviour
     public void GameStart()
     {
         GameManager.Instance.gameRunning = true;
-        //startGame();
+        startGame();
+    }
+
+    public void GameStop()
+    {
+        stopGame();
     }
 
     public void LoadScene()
     {
         SceneManager.LoadScene(0);
+    }
+
+    private void OnDestroy()
+    {
+        startGame = null;
+        stopGame = null;
     }
 }
