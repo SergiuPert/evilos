@@ -28,13 +28,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Attack()
-    {
-        animator.SetTrigger("Attack");
-        RotateFirePoint();
-        Instantiate(magicMissiles[GameManager.Instance.missileIndex], firePoint.position, firePoint.rotation);
-    }
-
     private void RotateFirePoint()
     {
         if (Cam != null)
@@ -48,4 +41,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Attack()
+    {
+        animator.SetTrigger("Attack");
+        RotateFirePoint();
+        Instantiate(magicMissiles[GameManager.Instance.missileIndex], firePoint.position, firePoint.rotation);
+    }
 }

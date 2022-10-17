@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class GameUIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI goldText;
     [SerializeField]
-    private TextMeshProUGUI healthText;
+    private Slider healthBar;
 
     private int goldEarned = 0;
 
@@ -44,12 +45,14 @@ public class GameUIManager : MonoBehaviour
     {
         if (dialoguesForLevel[GameManager.Instance.levelIndex].transform.childCount <= 0)
         {
-            startGame += GameStart;
-            if (startGame != null)
-            {
-                GameStart();
-                return;
-            }
+            //startGame += GameStart;
+            Invoke("GameStart", 0.1f);
+            //if (startGame != null)
+            //{
+            //    Debug.Log("got here");
+            //    GameStart();
+            //    return;
+            //}
         }
         GameObject dialogues = Instantiate(dialoguesForLevel[GameManager.Instance.levelIndex]);
         dialogues.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform,false);
@@ -57,18 +60,18 @@ public class GameUIManager : MonoBehaviour
 
     private void Update()
     {
-        CheckForWin();
+        CheckForWin(); //could call this from the enemies when they die
     }
 
     public void UpdateGold(int goldValue)
     {
         goldEarned += goldValue;
-        goldText.text = "Gold: " + goldEarned;
+        goldText.text = goldEarned.ToString();
     }
 
-    public void UpdateHealth(int health)
+    public void UpdateHealth(float health, float maxHealth)
     {
-        healthText.text = "Health " + health;
+        healthBar.value = health/maxHealth;
     }
 
     public void Lose()
@@ -87,7 +90,6 @@ public class GameUIManager : MonoBehaviour
             {
                 GameStop();
                 winPanel.SetActive(true);
-                GameManager.Instance.gold += goldEarned;
             }
         }
     }
@@ -106,6 +108,7 @@ public class GameUIManager : MonoBehaviour
 
     public void LoadScene()
     {
+        GameManager.Instance.gold += goldEarned;
         SceneManager.LoadScene(0);
     }
     //to reset the events

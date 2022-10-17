@@ -1,14 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuUIManager : MonoBehaviour
 {
+    //might be a good singleton
     [SerializeField]
     List<GameObject> menuPanels;
+    [SerializeField]
+    private TextMeshProUGUI shopGold;
+    [SerializeField]
+    private TextMeshProUGUI mapGold;
 
     private int currentIndex = 0;
+
+    private void Update() //Needs optimization
+    {
+        shopGold.text = GameManager.Instance.gold.ToString();
+        mapGold.text = GameManager.Instance.gold.ToString();
+    }
 
     public void SwitchPanel(int index)
     {
@@ -17,8 +29,9 @@ public class MenuUIManager : MonoBehaviour
         menuPanels[index].SetActive(true);
     }
 
-    public void LoadScene()
+    public void LoadScene(int selectedLevel)
     {
+        GameManager.Instance.levelIndex = selectedLevel;
         SceneManager.LoadScene(1);
     }
 }

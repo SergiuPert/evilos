@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3787875681685270134}
   - component: {fileID: 3910038911039830224}
   - component: {fileID: 3910803122669744744}
+  - component: {fileID: 5621350781396383533}
   m_Layer: 0
   m_Name: Projectile Hit 1
   m_TagString: Untagged
@@ -4904,6 +4905,17 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!210 &5621350781396383533
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3784288028488761038}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 100
 --- !u!1 &3784319114740233694
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,16 +5,18 @@ using UnityEngine;
 public class Home : MonoBehaviour
 {
     private float health;
+    private float maxHealth;
 
     void Start()
     {
         health = 100 + GameManager.Instance.additionalHealth;
-        GameUIManager.Instance.UpdateHealth((int)health);
+        maxHealth = health;
+        GameUIManager.Instance.UpdateHealth(health, maxHealth);
     }
     public void TakeDamage(float damage)
     {
         health -= damage;
-        GameUIManager.Instance.UpdateHealth((int)health);
+        GameUIManager.Instance.UpdateHealth(health, maxHealth);
         if (health <= 0)
         {
             Death();

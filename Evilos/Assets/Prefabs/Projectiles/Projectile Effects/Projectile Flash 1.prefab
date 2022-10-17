@@ -4902,6 +4902,7 @@ GameObject:
   - component: {fileID: 832961181180234444}
   - component: {fileID: 657541718362887570}
   - component: {fileID: 674441152561609300}
+  - component: {fileID: 5886978990003361006}
   m_Layer: 0
   m_Name: Projectile Flash 1
   m_TagString: Untagged
@@ -9775,6 +9776,17 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!210 &5886978990003361006
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836134394985388124}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 100
 --- !u!1 &836311952482205870
 GameObject:
   m_ObjectHideFlags: 0
