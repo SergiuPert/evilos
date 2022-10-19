@@ -18,8 +18,8 @@ public class MenuUIManager : MonoBehaviour
 
     private void Update() //Needs optimization
     {
-        shopGold.text = GameManager.Instance.gold.ToString();
-        mapGold.text = GameManager.Instance.gold.ToString();
+        shopGold.text = GameManager.Instance.userSave.Gold.ToString();
+        mapGold.text = GameManager.Instance.userSave.Gold.ToString();
     }
 
     public void SwitchPanel(int index)

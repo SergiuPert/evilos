@@ -5,11 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public UserSave userSave = new UserSave();
     public bool gameRunning = false;
     public int missileIndex = 0;
     public int levelIndex = 0;
     public int additionalHealth = 50; // to be changed
-    public int gold;
+    //public int gold;
 
     private void Awake()
     {

@@ -108,7 +108,7 @@ public class GameUIManager : MonoBehaviour
 
     public void LoadScene()
     {
-        GameManager.Instance.gold += goldEarned;
+        GameManager.Instance.userSave.Gold += goldEarned;
         SceneManager.LoadScene(0);
     }
     //to reset the events
