@@ -96,6 +96,10 @@ public class GPGSManager : MonoBehaviour
             isSaving = saving;
             ((PlayGamesPlatform)Social.Active).SavedGame.FetchAllSavedGames(DataSource.ReadCacheOrNetwork, CheckForSaves); // check first, if there are saves, if there are no saves make a new one
         }
+        else
+        {
+            GameManager.Instance.ChangeScene();
+        }
     }
 
     private void CheckForSaves(SavedGameRequestStatus status, List<ISavedGameMetadata> saves)

@@ -27,6 +27,12 @@ public class GameUIManager : MonoBehaviour
     private TextMeshProUGUI goldText;
     [SerializeField]
     private Slider healthBar;
+    [SerializeField]
+    private GameObject loadingScreen;
+    [SerializeField]
+    private Slider loadingBar;
+    [SerializeField]
+    private TextMeshProUGUI loadingText;
 
     private int goldEarned = 0;
 
@@ -108,10 +114,23 @@ public class GameUIManager : MonoBehaviour
         stopGame();
     }
 
-    public void LoadScene() // Maybe I need to create a coroutine to wait until the save is done
+    public void LoadScene()
     {
-        //GameManager.Instance.userSave.Gold += goldEarned; // Updated in the UpdateGold method instead
-        SceneManager.LoadScene(0);
+        StartCoroutine(LoadSceneAsync());
+    }
+
+    IEnumerator LoadSceneAsync()
+    {
+        //loadingScreen.SetActive(true); //// might not need
+        AsyncOperation operation = SceneManager.LoadSceneAsync(0);
+
+        while (!operation.isDone)
+        {
+            float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
+            loadingBar.value = progressValue;
+            loadingText.text = "Loading... " + (int)(progressValue * 100) + "%";
+            yield return null;
+        }
     }
     //to reset the events
     private void OnDestroy()
