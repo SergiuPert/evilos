@@ -98,6 +98,7 @@ public class Enemy : MonoBehaviour
             animator.SetBool("Dead", true);
             animator.SetTrigger("Die");
             GameUIManager.Instance.UpdateGold(goldValue);
+            GameUIManager.Instance.CheckForWin();
         }
     }
 }

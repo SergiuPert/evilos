@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public delegate void SceneChange();
+    public static event SceneChange sceneChange;
+
     public static GameManager Instance;
     public UserSave userSave = new UserSave();
     public bool gameRunning = false;
@@ -16,6 +19,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null)
         {
+            sceneChange = null; // for clearing events
             Destroy(gameObject);
             return;
         }
@@ -37,4 +41,10 @@ public class GameManager : MonoBehaviour
     {
 
     }
+
+    public void ChangeScene()
+    {
+        sceneChange();
+    }
+
 }

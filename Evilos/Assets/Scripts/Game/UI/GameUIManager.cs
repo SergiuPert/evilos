@@ -43,6 +43,7 @@ public class GameUIManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.sceneChange += LoadScene;
         if (dialoguesForLevel[GameManager.Instance.levelIndex].transform.childCount <= 0)
         {
             //startGame += GameStart;
@@ -60,12 +61,13 @@ public class GameUIManager : MonoBehaviour
 
     private void Update()
     {
-        CheckForWin(); //could call this from the enemies when they die
+        //CheckForWin(); //could call this from the enemies when they die
     }
 
     public void UpdateGold(int goldValue)
     {
         goldEarned += goldValue;
+        GameManager.Instance.userSave.Gold += goldValue;
         goldText.text = goldEarned.ToString();
     }
 
@@ -81,7 +83,7 @@ public class GameUIManager : MonoBehaviour
         losePanel.SetActive(true);
     }
 
-    private void CheckForWin()
+    public void CheckForWin()
     {
         if (GameManager.Instance.gameRunning)
         {
@@ -106,9 +108,9 @@ public class GameUIManager : MonoBehaviour
         stopGame();
     }
 
-    public void LoadScene()
+    public void LoadScene() // Maybe I need to create a coroutine to wait until the save is done
     {
-        GameManager.Instance.userSave.Gold += goldEarned;
+        //GameManager.Instance.userSave.Gold += goldEarned; // Updated in the UpdateGold method instead
         SceneManager.LoadScene(0);
     }
     //to reset the events

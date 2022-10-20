@@ -15,13 +15,25 @@ public class GPGSManager : MonoBehaviour
 {
     private PlayGamesClientConfiguration clientConfiguration;
 
-    public TextMeshProUGUI log;
-    public TextMeshProUGUI loadedData;
+    //public TextMeshProUGUI log;
+    //public TextMeshProUGUI loadedData;
+    [SerializeField]
+    private GameObject notSignedInPanel;
+    [SerializeField]
+    private GameObject signedInPanel;
 
-    void Start()
+    protected void Start()
     {
-        ConfigureGPGS();
-        SignIntoGPGS(SignInInteractivity.CanPromptOnce, clientConfiguration);
+        if(Social.localUser.authenticated)
+        {
+            notSignedInPanel.SetActive(false);
+            signedInPanel.SetActive(true);
+        }
+        else
+        {
+            ConfigureGPGS();
+            SignIntoGPGS(SignInInteractivity.CanPromptOnce, clientConfiguration);
+        }
     }
 
     internal void ConfigureGPGS()
@@ -42,31 +54,35 @@ public class GPGSManager : MonoBehaviour
             if (code == SignInStatus.Success)
             {
                 Debug.Log("Successfully Authenticated");
-                log.text = "Successfully Authenticated";
+                //log.text = "Successfully Authenticated";
                 Debug.Log("Hello " + Social.localUser.userName + "You have an ID of " + Social.localUser.id); /////////////////////////
-                log.text += "Hello " + Social.localUser.userName + "You have an ID of " + Social.localUser.id; /////////////////////////
-                //OpenSave(false);
+                //log.text += "Hello " + Social.localUser.userName + "You have an ID of " + Social.localUser.id; /////////////////////////
+                OpenSave(false);
+                notSignedInPanel.SetActive(false);
+                signedInPanel.SetActive(true);
             }
             else
             {
                 Debug.Log("Failed to Authenticate");
-                log.text += "Failed to Authenticate";
+                //log.text += "Failed to Authenticate";
                 Debug.Log("Failed to Authenticate, reason: " + code);
-                log.text += "Failed to Authenticate, reason: " + code;
+                //log.text += "Failed to Authenticate, reason: " + code;
             }
         });
     }
 
     public void BasicSignInBtn()
     {
+        ConfigureGPGS();
         SignIntoGPGS(SignInInteractivity.CanPromptAlways, clientConfiguration);
     }
 
     public void SignOutBtn()
     {
         PlayGamesPlatform.Instance.SignOut();
-        log.text = "Logged Out";
-
+        signedInPanel.SetActive(false);
+        notSignedInPanel.SetActive(true);
+        //log.text = "Logged Out";
     }
 
     #region SavedGames
@@ -76,7 +92,7 @@ public class GPGSManager : MonoBehaviour
     {
         if (Social.localUser.authenticated)
         {
-            log.text += " %User Authenticated& ";
+            //log.text += " %User Authenticated& ";
             isSaving = saving;
             ((PlayGamesPlatform)Social.Active).SavedGame.FetchAllSavedGames(DataSource.ReadCacheOrNetwork, CheckForSaves); // check first, if there are saves, if there are no saves make a new one
         }
@@ -88,12 +104,12 @@ public class GPGSManager : MonoBehaviour
         {
             if (saves.Count == 0)
             {
-                log.text += " %Making new save& ";
+                //log.text += " %Making new save& ";
                 ((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution("SaveFile", DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, CreateNewSave);
             }
             else
             {
-                log.text += " %Save exists& ";
+                //log.text += " %Save exists& ";
                 ((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution("SaveFile", DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, SaveGameOpen);
             }
         }
@@ -109,31 +125,31 @@ public class GPGSManager : MonoBehaviour
         {
 
             UserSave newSave = new UserSave();
-            log.text += " %1& ";
+            //log.text += " %1& ";
 
             newSave.UserId = Social.localUser.id;
-            log.text += " %2& ";
+            //log.text += " %2& ";
 
             newSave.Name = Social.localUser.userName;
-            log.text += " %3& ";
+            //log.text += " %3& ";
 
             GameManager.Instance.userSave = newSave;
-            log.text += " %4& ";
+            //log.text += " %4& ";
 
             // convert the UserSave object to a byte array
             byte[] myData = ObjectToByteArray(newSave);
-            log.text += " %5& ";
+            //log.text += " %5& ";
 
             //update the metadata
             SavedGameMetadataUpdate updateForMetadata = new SavedGameMetadataUpdate.Builder().WithUpdatedDescription("Updated at: " + DateTime.Now.ToString()).Build();
-            log.text += " %Saving new save& ";
+            //log.text += " %Saving new save& ";
 
             // commit the save
             ((PlayGamesPlatform)Social.Active).SavedGame.CommitUpdate(meta, updateForMetadata, myData, SaveCallBack);
         }
         else
         {
-            log.text += " %failed saving new save& " + status;
+            //log.text += " %failed saving new save& " + status;
         }
     }
 
@@ -143,7 +159,7 @@ public class GPGSManager : MonoBehaviour
         {
             if (isSaving) // saving
             {
-                log.text += " %Saving& ";
+                //log.text += " %Saving& ";
 
                 // get the user info from the game manager for the save
                 UserSave user = GameManager.Instance.userSave;
@@ -156,7 +172,7 @@ public class GPGSManager : MonoBehaviour
             }
             else // loading
             {
-                log.text += " %Loading& ";
+                //log.text += " %Loading& ";
 
                 ((PlayGamesPlatform)Social.Active).SavedGame.ReadBinaryData(meta, LoadCallback);
             }
@@ -168,12 +184,14 @@ public class GPGSManager : MonoBehaviour
         if (status == SavedGameRequestStatus.Success)
         {
             Debug.Log("File saved successfully");
-            log.text += " %Save Succesful& ";
+            GameManager.Instance.ChangeScene();
+            //I CAN TELL THE GAME MANAGER THAT THE SAVE IS DONE AND THEN LAUNCH AN EVENT TO LOAD SCENE OR SOMETHING ELSE
+            //log.text += " %Save Succesful& ";
         }
         else
         {
             Debug.Log("File save failed");
-            log.text += " %Save failed& ";
+            //log.text += " %Save failed& ";
 
         }
     }
@@ -182,14 +200,14 @@ public class GPGSManager : MonoBehaviour
     {
         if (status == SavedGameRequestStatus.Success)
         {
-            log.text += " %Loaded data& ";
+            //log.text += " %Loaded data& ";
 
             UserSave user = ByteArrayToObject(data);
             GameManager.Instance.userSave = user;
-            loadedData.text += " % " + GameManager.Instance.userSave.Name + " & ";
-            loadedData.text += " % " + user.Name + " & ";
-            loadedData.text += " % " + GameManager.Instance.userSave.Gold + " & ";
-            loadedData.text += " % " + user.Gold + " & ";
+            //loadedData.text += " % " + GameManager.Instance.userSave.Name + " & ";
+            //loadedData.text += " % " + user.Name + " & ";
+            //loadedData.text += " % " + GameManager.Instance.userSave.Gold + " & ";
+            //loadedData.text += " % " + user.Gold + " & ";
 
         }
     }
