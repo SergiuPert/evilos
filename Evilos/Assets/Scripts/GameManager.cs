@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
     public delegate void SceneChange();
     public static event SceneChange sceneChange;
 
-    public static GameManager Instance;
     public UserSave userSave = new UserSave();
     public bool gameRunning = false;
     public bool isSecondaryLoad;

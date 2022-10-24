@@ -22,7 +22,7 @@ public class GPGSManager : MonoBehaviour
     [SerializeField]
     private GameObject signedInPanel;
 
-    protected void Start()
+    private void Start()
     {
         if(Social.localUser.authenticated)
         {

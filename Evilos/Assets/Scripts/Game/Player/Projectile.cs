@@ -15,8 +15,15 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private GameObject[] Detached;
     [SerializeField]
-    private float damage = 50;
+    private int minDamage = 20;
+    [SerializeField]
+    private int maxDamage = 50;
+    [SerializeField]
+    private int critChance = 25;
+    
 
+
+    private int damage;
     private Rigidbody2D rb;
 
 
@@ -62,7 +69,11 @@ public class Projectile : MonoBehaviour
                 Debug.Log("Enemy script missing");
                 return;
             }
+            damage = Random.Range(minDamage, maxDamage);
+            bool isCritical = Random.Range(0, 100) < critChance;
+            if (isCritical) damage *= 2;
             enemy.TakeDamage(damage);
+            DamagePopup.Create(transform.position, damage, isCritical);
             //Lock all axes movement and rotation
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             speed = 0;
