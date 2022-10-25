@@ -12,8 +12,6 @@ public class ProjectileMover2D : MonoBehaviour
     public GameObject flash;
     private Rigidbody2D rb;
     public GameObject[] Detached;
-    private float damage = 50;
-
 
     void Start()
     {
@@ -36,7 +34,7 @@ public class ProjectileMover2D : MonoBehaviour
                 Destroy(flashInstance, flashPsParts.main.duration);
             }
         }
-        Destroy(gameObject,20);
+        Destroy(gameObject,5);
 	}
 
     void FixedUpdate ()
@@ -49,58 +47,46 @@ public class ProjectileMover2D : MonoBehaviour
 	}
 
     //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        //Lock all axes movement and rotation
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        speed = 0;
+
+        ContactPoint2D contact = collision.contacts[0];
+        Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+        Vector3 pos = contact.point + contact.normal * hitOffset;
+
+        //Spawn hit effect on collision
+        if (hit != null)
         {
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            if (enemy == null)
+            var hitInstance = Instantiate(hit, pos, rot);
+            if (UseFirePointRotation) { hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); }
+            else if (rotationOffset != Vector3.zero) { hitInstance.transform.rotation = Quaternion.Euler(rotationOffset); }
+            else { hitInstance.transform.LookAt(contact.point + contact.normal); }
+
+            //Destroy hit effects depending on particle Duration time
+            var hitPs = hitInstance.GetComponent<ParticleSystem>();
+            if (hitPs != null)
             {
-                Debug.Log("Enemy script missing");
-                return;
+                Destroy(hitInstance, hitPs.main.duration);
             }
-            enemy.TakeDamage(damage);
-            //Lock all axes movement and rotation
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            speed = 0;
-
-            //ContactPoint2D contact = collision.contacts[0];
-            //Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            //Vector3 pos = contact.point + contact.normal * hitOffset;
-
-            //Spawn hit effect on collision
-            if (hit != null)
+            else
             {
-                var hitInstance = Instantiate(hit, transform.position, transform.rotation);
-                //var hitInstance = Instantiate(hit, pos, rot);
-                //if (UseFirePointRotation) { hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); }
-                //else if (rotationOffset != Vector3.zero) { hitInstance.transform.rotation = Quaternion.Euler(rotationOffset); }
-                //else { hitInstance.transform.LookAt(contact.point + contact.normal); }
-
-                //Destroy hit effects depending on particle Duration time
-                var hitPs = hitInstance.GetComponent<ParticleSystem>();
-                if (hitPs != null)
-                {
-                    Destroy(hitInstance, hitPs.main.duration);
-                }
-                else
-                {
-                    var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                    Destroy(hitInstance, hitPsParts.main.duration);
-                }
+                var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(hitInstance, hitPsParts.main.duration);
             }
-
-            //Removing trail from the projectile on cillision enter or smooth removing. Detached elements must have "AutoDestroying script"
-            foreach (var detachedPrefab in Detached)
-            {
-                if (detachedPrefab != null)
-                {
-                    detachedPrefab.transform.parent = null;
-                }
-            }
-            //Destroy projectile on collision
-            Destroy(gameObject);
         }
 
+        //Removing trail from the projectile on cillision enter or smooth removing. Detached elements must have "AutoDestroying script"
+        foreach (var detachedPrefab in Detached)
+        {
+            if (detachedPrefab != null)
+            {
+                detachedPrefab.transform.parent = null;
+            }
+        }
+        //Destroy projectile on collision
+        Destroy(gameObject);
     }
 }
