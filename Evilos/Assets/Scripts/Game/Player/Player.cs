@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    private GameObject[] magicMissiles;
+    private GameObject magicMissile;
     [SerializeField]
     private Transform firePoint;
     [SerializeField]
@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     private Animator animator;
 
-    void Start()
+    void OnEnable()
     {
         animator = GetComponent<Animator>();
     }
@@ -45,6 +45,6 @@ public class Player : MonoBehaviour
     {
         animator.SetTrigger("Attack");
         RotateFirePoint();
-        Instantiate(magicMissiles[GameManager.Instance.missileIndex], firePoint.position, firePoint.rotation);
+        Instantiate(magicMissile, firePoint.position, firePoint.rotation); //make attack work for all weapons
     }
 }

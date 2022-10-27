@@ -15,20 +15,26 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private GameObject[] Detached;
     [SerializeField]
-    private int minDamage = 20;
+    private float minDamage = 20;
     [SerializeField]
-    private int maxDamage = 50;
+    private float maxDamage = 50;
     [SerializeField]
     private int critChance = 25;
     
 
 
-    private int damage;
+    private float damage;
     private Rigidbody2D rb;
 
 
     void Start()
     {
+        int weaponIndex = GameManager.Instance.mainWeaponUpgrade / 6;
+        int upgradeLevel = GameManager.Instance.mainWeaponUpgrade % 6;
+        minDamage *= (1 + 0.1f * upgradeLevel);
+        maxDamage *= (1 + 0.1f * upgradeLevel);
+
+
         rb = GetComponent<Rigidbody2D>();
         if (flash != null)
         {
@@ -73,7 +79,7 @@ public class Projectile : MonoBehaviour
             bool isCritical = Random.Range(0, 100) < critChance;
             if (isCritical) damage *= 2;
             enemy.TakeDamage(damage);
-            DamagePopup.Create(transform.position, damage, isCritical);
+            DamagePopup.Create(transform.position, (int)damage, isCritical);
             //Lock all axes movement and rotation
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             speed = 0;

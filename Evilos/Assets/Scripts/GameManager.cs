@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int missileIndex = 0;
     public int levelIndex = 0;
     public int additionalHealth = 50; // to be changed
+    public int mainWeaponUpgrade = 0; // to be added to the userSave
     //public int gold;
 
     private void Awake()

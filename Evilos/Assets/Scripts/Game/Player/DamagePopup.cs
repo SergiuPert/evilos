@@ -35,7 +35,6 @@ public class DamagePopup : MonoBehaviour
         }
         else if (!isCriticalHit)
         {
-            Debug.Log("not crit");
             textMesh.fontSize = 15;
             textColor = new Color(1f, 0.7764706f, 0.02352941f);
         }
