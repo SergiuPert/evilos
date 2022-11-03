@@ -584,8 +584,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888124097516478627}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.09, y: 0.72, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7359862, w: 0.6769966}
+  m_LocalPosition: {x: 2.11, y: 0.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15924,7 +15924,7 @@ MonoBehaviour:
       mouthPart: {fileID: 0}
       earPart: {fileID: 0}
   emoteAnimIndex: -1
-  initializeAtAwake: 1
+  initializeAtAwake: 0
   instanceMaterials: 1
   sprites:
   - {fileID: 4235301403380219294}
@@ -16084,6 +16084,8 @@ MonoBehaviour:
   firePoint: {fileID: 2641555225370509474}
   Cam: {fileID: 0}
   attackAnimation: ShootMainHand
+  attackSpeed: 0.4
+  manaCost: 0
 --- !u!1 &6384334166722704275
 GameObject:
   m_ObjectHideFlags: 0

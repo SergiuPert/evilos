@@ -54,29 +54,63 @@ public class Player : MonoBehaviour
         RotateFirePoint();
         Instantiate(magicMissile, firePoint.position, firePoint.rotation);
         GameUIManager.Instance.mana -= manaCost;
+        //ConsumeAmmo();
     }
 
 
     void Shoot(string animation)
     {
-        animator.SetTrigger(animation);
-        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Debug.Log("bruh");
-        //Debug.Log(mousePos);
-        if (mousePos.y > -7 && mousePos.y < 3)
+        bool hasAmmo = ConsumeAmmo();
+        if (hasAmmo || manaCost > 0)
         {
-            animator.SetFloat("Aim", mousePos.y / 50);
-        }
-        else if (mousePos.y > 0)
-        {
-            animator.SetFloat("Aim", mousePos.y / 50 + Math.Abs(mousePos.x / 190));
-        }
-        else
-        {
-            animator.SetFloat("Aim", mousePos.y / 50 - Math.Abs(mousePos.x / 190));
+            animator.SetTrigger(animation);
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //Debug.Log("bruh");
+            //Debug.Log(mousePos);
+            if (mousePos.y > -7 && mousePos.y < 3)
+            {
+                animator.SetFloat("Aim", mousePos.y / 50);
+            }
+            else if (mousePos.y > 0)
+            {
+                animator.SetFloat("Aim", mousePos.y / 50 + Math.Abs(mousePos.x / 190));
+            }
+            else
+            {
+                animator.SetFloat("Aim", mousePos.y / 50 - Math.Abs(mousePos.x / 190));
+            }
         }
     }
-
+    private bool ConsumeAmmo()
+    {
+        switch(gameObject.name)
+        {
+            case "Fireblaster":
+                if(GameManager.Instance.userSave.FireblasterAmmo > 0)
+                {
+                    GameManager.Instance.userSave.FireblasterAmmo--;
+                }
+                else
+                {
+                    return false;
+                }
+                break;
+            case "Gun2":
+                if(GameManager.Instance.userSave.Gun2Ammo > 0)
+                {
+                    GameManager.Instance.userSave.Gun2Ammo--;
+                }
+                else
+                {
+                    return false;
+                }
+                break;
+            default:
+                return false;
+        }
+        GameUIManager.Instance.UpdateAmmo();
+        return true;
+    }
 
 
 }

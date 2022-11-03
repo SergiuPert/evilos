@@ -35,7 +35,12 @@ public class GameUIManager : MonoBehaviour
     private Slider loadingBar;
     [SerializeField]
     private TextMeshProUGUI loadingText;
+    [SerializeField]
+    private TextMeshProUGUI FirstWeaponAmmo;
+    [SerializeField]
+    private TextMeshProUGUI SecondWeaponAmmo;
 
+    private int weaponSelected = 0;
     private int goldEarned = 0;
     public float mana = 100;
 
@@ -66,6 +71,8 @@ public class GameUIManager : MonoBehaviour
         }
         GameObject dialogues = Instantiate(dialoguesForLevel[GameManager.Instance.levelIndex]);
         dialogues.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform,false);
+        InitiateAmmo(GameManager.Instance.userSave.FirstSelectedGun, FirstWeaponAmmo);
+        InitiateAmmo(GameManager.Instance.userSave.SecondSelectedGun, SecondWeaponAmmo);
     }
 
     private void Update()
@@ -94,6 +101,23 @@ public class GameUIManager : MonoBehaviour
         healthBar.value = health/maxHealth;
     }
 
+    public void UpdateWeaponSelected(int weaponIndex)
+    {
+        weaponSelected = weaponIndex;
+    }
+
+    public void UpdateAmmo()
+    {
+        if(weaponSelected == 1)
+        {
+            FirstWeaponAmmo.text = (int.Parse(FirstWeaponAmmo.text) - 1).ToString();
+        }
+        else if(weaponSelected == 2)
+        {
+            SecondWeaponAmmo.text = (int.Parse(SecondWeaponAmmo.text) - 1).ToString();
+        }
+    }
+
     public void Lose()
     {
         GameManager.Instance.gameRunning = false;
@@ -111,6 +135,21 @@ public class GameUIManager : MonoBehaviour
                 GameStop();
                 winPanel.SetActive(true);
             }
+        }
+    }
+
+    private void InitiateAmmo(string ammoType, TextMeshProUGUI text)
+    {
+        switch (ammoType)
+        {
+            case "Fireblaster":
+                text.text = GameManager.Instance.userSave.FireblasterAmmo.ToString();
+                break;
+            case "Gun2":
+                text.text = GameManager.Instance.userSave.Gun2Ammo.ToString();
+                break;
+            default:
+                return;
         }
     }
 

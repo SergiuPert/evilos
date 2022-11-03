@@ -18947,6 +18947,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slider_Red
       objectReference: {fileID: 0}
+    - target: {fileID: 8156337283589217190, guid: bcff8f55a62fb384092c32631142f124, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8156337283987778756, guid: bcff8f55a62fb384092c32631142f124, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
