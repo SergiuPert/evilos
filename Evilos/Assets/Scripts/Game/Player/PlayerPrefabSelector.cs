@@ -8,6 +8,6 @@ public class PlayerPrefabSelector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerPrefabs[GameManager.Instance.mainWeaponUpgrade / 6].SetActive(true);
+        playerPrefabs[GameManager.Instance.userSave.MainWeaponUpgrade / 6].SetActive(true);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,14 @@ public class Player : MonoBehaviour
     private Transform firePoint;
     [SerializeField]
     private Camera Cam;
+    [SerializeField]
+    private string attackAnimation;
+    [SerializeField]
+    private float attackSpeed;
+    [SerializeField]
+    private int manaCost;
 
+    private float lastAttack;
     private Animator animator;
 
     void OnEnable()
@@ -22,9 +30,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && GameManager.Instance.gameRunning)
+        if (Input.GetButton("Fire1") && GameManager.Instance.gameRunning && GameUIManager.Instance.mana >= manaCost && lastAttack + attackSpeed < Time.time)
         {
-            Attack();
+            lastAttack = Time.time;
+            Shoot(attackAnimation);
         }
     }
 
@@ -40,11 +49,34 @@ public class Player : MonoBehaviour
             Debug.Log("No camera");
         }
     }
-
-    void Attack()
+    public void AttackAnimationEvent()
     {
-        animator.SetTrigger("Attack");
         RotateFirePoint();
-        Instantiate(magicMissile, firePoint.position, firePoint.rotation); //make attack work for all weapons
+        Instantiate(magicMissile, firePoint.position, firePoint.rotation);
+        GameUIManager.Instance.mana -= manaCost;
     }
+
+
+    void Shoot(string animation)
+    {
+        animator.SetTrigger(animation);
+        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Debug.Log("bruh");
+        //Debug.Log(mousePos);
+        if (mousePos.y > -7 && mousePos.y < 3)
+        {
+            animator.SetFloat("Aim", mousePos.y / 50);
+        }
+        else if (mousePos.y > 0)
+        {
+            animator.SetFloat("Aim", mousePos.y / 50 + Math.Abs(mousePos.x / 190));
+        }
+        else
+        {
+            animator.SetFloat("Aim", mousePos.y / 50 - Math.Abs(mousePos.x / 190));
+        }
+    }
+
+
+
 }

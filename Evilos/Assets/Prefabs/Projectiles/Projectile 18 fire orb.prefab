@@ -14767,7 +14767,7 @@ Transform:
   m_GameObject: {fileID: 4928460297501142893}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4931200840526625115}
@@ -19580,8 +19580,8 @@ MonoBehaviour:
   hit: {fileID: 7438280790508300974, guid: 9f512484d302c8b488a156f5a0e130f4, type: 3}
   flash: {fileID: 8730446294946119900, guid: 4985a43376582f04e8da01c940418de6, type: 3}
   Detached: []
-  minDamage: 20
-  maxDamage: 50
+  minDamage: 125
+  maxDamage: 160
   critChance: 25
 --- !u!199 &5090521598036439451
 ParticleSystemRenderer:

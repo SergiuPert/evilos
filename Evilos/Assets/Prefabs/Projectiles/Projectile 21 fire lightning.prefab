@@ -9679,8 +9679,8 @@ MonoBehaviour:
   flash: {fileID: 0}
   Detached:
   - {fileID: 2677643267177045279}
-  minDamage: 20
-  maxDamage: 50
+  minDamage: 75
+  maxDamage: 100
   critChance: 25
 --- !u!199 &2875890333559238549
 ParticleSystemRenderer:

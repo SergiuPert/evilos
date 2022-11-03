@@ -1542,12 +1542,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530457233214042486}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 7.4300003, y: 10.05, z: 0}
+  m_LocalRotation: {x: -0.4786528, y: -0.52047235, z: 0.52047235, w: 0.4786528}
+  m_LocalPosition: {x: 0.01, y: 6.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1414356255451164566}
+  m_Father: {fileID: 4675668074470690083}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1543548562798013768
@@ -4643,7 +4643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1414356255451164566
 Transform:
   m_ObjectHideFlags: 0
@@ -4656,7 +4656,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1785390901934172470}
   - {fileID: 8008580492397545664}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -4920,7 +4919,7 @@ MonoBehaviour:
       mouthPart: {fileID: 0}
       earPart: {fileID: 0}
   emoteAnimIndex: -1
-  initializeAtAwake: 1
+  initializeAtAwake: 0
   instanceMaterials: 1
   sprites:
   - {fileID: 1714423237670022341}
@@ -5076,30 +5075,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3381135cd6b1e4cbccda1cd26371c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magicMissiles:
-  - {fileID: 7363188230611025150, guid: 4afa9cc161c5e8748bf185ab16ef9e8d, type: 3}
-  - {fileID: 3374964754293453096, guid: b7cd2c153c2fa624892313f26cfed6ff, type: 3}
-  - {fileID: 3728846062054104231, guid: 446f48bc8d2e1fe458e6b6ce92a9e301, type: 3}
-  - {fileID: 8666917937942184499, guid: 4bb44e9148c69a44bafb91c2b850d3dc, type: 3}
-  - {fileID: 7889745968207177550, guid: 814a30aecb6cb8f409f519c8a5194b7a, type: 3}
-  - {fileID: 822975452019113121, guid: 45796ad3c60ef4749bf40ec66153e913, type: 3}
-  - {fileID: 3389804825073339837, guid: 043052cf689589349bedfba16576c7cf, type: 3}
-  - {fileID: 6874410544159066475, guid: e4e6bcb06f2d6764bb45e6cf1a531425, type: 3}
-  - {fileID: 6347574151861471648, guid: 3233689da3e92f84689a09e072ce756c, type: 3}
-  - {fileID: 2795636743890645010, guid: 31fc9fd095803c44392bc84a76877f52, type: 3}
-  - {fileID: 6714759588133997032, guid: 42707adf530e6ba4ba2fcf72a0a4d62c, type: 3}
-  - {fileID: 1081471794607690470, guid: 7c4099310423ded46b7cd24afc265468, type: 3}
-  - {fileID: 5402530323308269890, guid: ea7e02dfc2be99541a0130ab77767564, type: 3}
-  - {fileID: 5214392033776366930, guid: 964ed675bc57ecc42b8ca6859bba53b7, type: 3}
-  - {fileID: 4928460297501142893, guid: ea46614df11496e4eb20ce6fa08fda7b, type: 3}
-  - {fileID: 6375664411835188412, guid: b94946a87485c7c48b8e097f1dfc77fb, type: 3}
-  - {fileID: 2677802889591834201, guid: f4db79d98e643974b8718be4e727fb26, type: 3}
-  - {fileID: 721427418265111615, guid: c51d3c8dd9f7ee74cb3868e770f47224, type: 3}
-  - {fileID: 4523319330621409801, guid: 5c190763d8f607849b316e92b21ed3c2, type: 3}
-  - {fileID: 6258678744151807767, guid: d801700e3a3b8b64c99f1cec47bf9958, type: 3}
-  - {fileID: 3760108464748320406, guid: 3c9aa68aed77b804e95b8235696b88c3, type: 3}
-  firePoint: {fileID: 0}
+  magicMissile: {fileID: 7363188230611025150, guid: 4afa9cc161c5e8748bf185ab16ef9e8d, type: 3}
+  firePoint: {fileID: 1785390901934172470}
   Cam: {fileID: 0}
+  attackAnimation: Attack
+  attackSpeed: 0.25
+  manaCost: 10
 --- !u!1 &5043900152574331826
 GameObject:
   m_ObjectHideFlags: 0
@@ -6182,7 +6163,7 @@ Transform:
   - {fileID: 189940921906133599}
   - {fileID: 8490173229494589196}
   m_Father: {fileID: 1414356255451164566}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5937191996985420654
 GameObject:
@@ -12272,7 +12253,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1785390901934172470}
   m_Father: {fileID: 6326849231343318766}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}

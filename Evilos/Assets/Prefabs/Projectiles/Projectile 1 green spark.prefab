@@ -14511,7 +14511,7 @@ MonoBehaviour:
   - {fileID: 7363165854843858974}
   - {fileID: 7363035534185638102}
   minDamage: 20
-  maxDamage: 50
+  maxDamage: 30
   critChance: 25
 --- !u!199 &7271292989925105082
 ParticleSystemRenderer:

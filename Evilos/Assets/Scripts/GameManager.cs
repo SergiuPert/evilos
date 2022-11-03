@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     public int missileIndex = 0;
     public int levelIndex = 0;
     public int additionalHealth = 50; // to be changed
-    public int mainWeaponUpgrade = 0; // to be added to the userSave
-    //public int gold;
 
     private void Awake()
     {
@@ -27,6 +25,10 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+        #region testing
+        userSave.Gold = 10000000;
+        //userSave.MainWeaponUpgrade = 20;
+        #endregion
         DontDestroyOnLoad(gameObject);
     }
 

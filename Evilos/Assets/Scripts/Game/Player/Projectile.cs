@@ -29,11 +29,10 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        int weaponIndex = GameManager.Instance.mainWeaponUpgrade / 6;
-        int upgradeLevel = GameManager.Instance.mainWeaponUpgrade % 6;
+        int weaponIndex = GameManager.Instance.userSave.MainWeaponUpgrade / 6;
+        int upgradeLevel = GameManager.Instance.userSave.MainWeaponUpgrade % 6;
         minDamage *= (1 + 0.1f * upgradeLevel);
         maxDamage *= (1 + 0.1f * upgradeLevel);
-
 
         rb = GetComponent<Rigidbody2D>();
         if (flash != null)

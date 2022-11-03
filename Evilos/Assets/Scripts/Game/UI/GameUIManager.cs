@@ -28,6 +28,8 @@ public class GameUIManager : MonoBehaviour
     [SerializeField]
     private Slider healthBar;
     [SerializeField]
+    private Slider manaBar;
+    [SerializeField]
     private GameObject loadingScreen;
     [SerializeField]
     private Slider loadingBar;
@@ -35,6 +37,7 @@ public class GameUIManager : MonoBehaviour
     private TextMeshProUGUI loadingText;
 
     private int goldEarned = 0;
+    public float mana = 100;
 
     private void Awake()
     {
@@ -67,6 +70,15 @@ public class GameUIManager : MonoBehaviour
 
     private void Update()
     {
+        if (mana < 100)
+        {
+            mana += 10 * Time.deltaTime;
+            if (mana > 100)
+            {
+                mana = 100;
+            }
+            manaBar.value = mana;
+        }
         //CheckForWin(); //could call this from the enemies when they die
     }
 

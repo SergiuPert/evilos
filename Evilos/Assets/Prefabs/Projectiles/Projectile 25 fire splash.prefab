@@ -4833,8 +4833,8 @@ MonoBehaviour:
   flash: {fileID: 1669287657793010851, guid: 30cd6991cdbf945499798cc3b0c713b3, type: 3}
   Detached:
   - {fileID: 6259289213444238659}
-  minDamage: 20
-  maxDamage: 50
+  minDamage: 200
+  maxDamage: 300
   critChance: 25
 --- !u!199 &6061208101127412711
 ParticleSystemRenderer:

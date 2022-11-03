@@ -316,7 +316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3473692865610252294, guid: 0fa97653500c57e4792ae178c6c44362, type: 3}
       propertyPath: m_text
-      value: '"Eat the toilep paper so it wipes you on the way out"'
+      value: '"Eat the toilet paper so it wipes you on the way out"'
       objectReference: {fileID: 0}
     - target: {fileID: 3473692865610252294, guid: 0fa97653500c57e4792ae178c6c44362, type: 3}
       propertyPath: m_fontStyle

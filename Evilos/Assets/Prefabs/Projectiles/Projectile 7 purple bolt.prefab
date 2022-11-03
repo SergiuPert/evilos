@@ -19481,8 +19481,8 @@ MonoBehaviour:
   hit: {fileID: 1806175954401673589, guid: b354503916d16074bb874a04d265ffa9, type: 3}
   flash: {fileID: 312491244106589813, guid: 133d011e6152d314abe391684a6b407f, type: 3}
   Detached: []
-  minDamage: 20
-  maxDamage: 50
+  minDamage: 40
+  maxDamage: 60
   critChance: 25
 --- !u!199 &697497462446581597
 ParticleSystemRenderer:
