@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButton("Fire1") && GameManager.Instance.gameRunning && GameUIManager.Instance.mana >= manaCost && lastAttack + attackSpeed < Time.time)
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return; //needs testing on phone
             lastAttack = Time.time;
             Shoot(attackAnimation);
         }
@@ -95,10 +97,10 @@ public class Player : MonoBehaviour
                     return false;
                 }
                 break;
-            case "Gun2":
-                if(GameManager.Instance.userSave.Gun2Ammo > 0)
+            case "Frost Shard":
+                if(GameManager.Instance.userSave.FrostShardAmmo > 0)
                 {
-                    GameManager.Instance.userSave.Gun2Ammo--;
+                    GameManager.Instance.userSave.FrostShardAmmo--;
                 }
                 else
                 {

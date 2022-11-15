@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,30 +16,21 @@ public class GameUIManager : MonoBehaviour
     public delegate void StopGame();
     public static event StopGame stopGame;
 
-    [SerializeField]
-    private GameObject[] maps; // or tilemaps
-    [SerializeField]
-    private GameObject[] dialoguesForLevel;
-    [SerializeField]
-    private GameObject winPanel;
-    [SerializeField]
-    private GameObject losePanel;
-    [SerializeField]
-    private TextMeshProUGUI goldText;
-    [SerializeField]
-    private Slider healthBar;
-    [SerializeField]
-    private Slider manaBar;
-    [SerializeField]
-    private GameObject loadingScreen;
-    [SerializeField]
-    private Slider loadingBar;
-    [SerializeField]
-    private TextMeshProUGUI loadingText;
-    [SerializeField]
-    private TextMeshProUGUI FirstWeaponAmmo;
-    [SerializeField]
-    private TextMeshProUGUI SecondWeaponAmmo;
+    [SerializeField] private GameObject[] maps; // or tilemaps
+    [SerializeField] private GameObject[] dialoguesForLevel;
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject losePanel;
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private Slider healthBar;
+    [SerializeField] private Slider manaBar;
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Slider loadingBar;
+    [SerializeField] private TextMeshProUGUI loadingText;
+    [SerializeField] private TextMeshProUGUI FirstWeaponAmmo;
+    [SerializeField] private TextMeshProUGUI SecondWeaponAmmo;
+    [SerializeField] private List<GameObject> mainWeaponSprites;
+    [SerializeField] private List<GameObject> firstWeaponSprites;
+    [SerializeField] private List<GameObject> secondWeaponSprites;
 
     private int weaponSelected = 0;
     private int goldEarned = 0;
@@ -60,20 +52,23 @@ public class GameUIManager : MonoBehaviour
         GameManager.sceneChange += LoadScene;
         if (dialoguesForLevel[GameManager.Instance.levelIndex].transform.childCount <= 0)
         {
-            //startGame += GameStart;
             Invoke("GameStart", 0.1f);
-            //if (startGame != null)
-            //{
-            //    Debug.Log("got here");
-            //    GameStart();
-            //    return;
-            //}
         }
+        InitiateWeaponSprites();
         GameObject dialogues = Instantiate(dialoguesForLevel[GameManager.Instance.levelIndex]);
         dialogues.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform,false);
         InitiateAmmo(GameManager.Instance.userSave.FirstSelectedGun, FirstWeaponAmmo);
         InitiateAmmo(GameManager.Instance.userSave.SecondSelectedGun, SecondWeaponAmmo);
     }
+
+    private void InitiateWeaponSprites()
+    {
+        mainWeaponSprites[GameManager.Instance.userSave.MainWeaponUpgrade/6].gameObject.SetActive(true);
+        firstWeaponSprites.Where(sprite => sprite.gameObject.name == GameManager.Instance.userSave.FirstSelectedGun).FirstOrDefault().SetActive(true);
+        secondWeaponSprites.Where(sprite => sprite.gameObject.name == GameManager.Instance.userSave.SecondSelectedGun).FirstOrDefault().SetActive(true);
+
+    }
+
 
     private void Update()
     {
@@ -104,6 +99,21 @@ public class GameUIManager : MonoBehaviour
     public void UpdateWeaponSelected(int weaponIndex)
     {
         weaponSelected = weaponIndex;
+    }
+
+    private void InitiateAmmo(string ammoType, TextMeshProUGUI text)
+    {
+        switch (ammoType)
+        {
+            case "Fireblaster":
+                text.text = GameManager.Instance.userSave.FireblasterAmmo.ToString();
+                break;
+            case "Frost Shard":
+                text.text = GameManager.Instance.userSave.FrostShardAmmo.ToString();
+                break;
+            default:
+                return;
+        }
     }
 
     public void UpdateAmmo()
@@ -138,20 +148,7 @@ public class GameUIManager : MonoBehaviour
         }
     }
 
-    private void InitiateAmmo(string ammoType, TextMeshProUGUI text)
-    {
-        switch (ammoType)
-        {
-            case "Fireblaster":
-                text.text = GameManager.Instance.userSave.FireblasterAmmo.ToString();
-                break;
-            case "Gun2":
-                text.text = GameManager.Instance.userSave.Gun2Ammo.ToString();
-                break;
-            default:
-                return;
-        }
-    }
+
 
     public void GameStart()
     {

@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     protected bool inRange = false;
     protected Animator animator;
-    private Home home;
+    private Barrier home;
     private float lastAttack = 0;
     private float maxHealth;
 
@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
         maxHealth = health;
         animator = GetComponent<Animator>();
         
-        home = GameObject.Find("Home").GetComponent<Home>(); // create event for home to take damage
+        home = GameObject.Find("Home").GetComponent<Barrier>(); // create event for home to take damage
         if (home == null)
         {
             Debug.Log("Home not found");

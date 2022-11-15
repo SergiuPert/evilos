@@ -14,8 +14,8 @@ public class UserSave
     public int MainWeaponUpgrade { get; set; }
     public int FireblasterUpgrade { get; set; }
     public int FireblasterAmmo { get; set; }
-    public int Gun2Upgrade { get; set; }
-    public int Gun2Ammo { get; set; }
+    public int FrostShardUpgrade { get; set; }
+    public int FrostShardAmmo { get; set; }
     public string FirstSelectedGun { get; set; }
     public string SecondSelectedGun { get; set; }
 }

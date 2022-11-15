@@ -26,13 +26,13 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         #region testing
-        userSave.Gold = 10000000;
+        userSave.Gold = 90000;
         userSave.FireblasterUpgrade = 0;
         userSave.FireblasterAmmo = 40;
-        userSave.Gun2Upgrade = 0;
-        userSave.Gun2Ammo = 10;
+        userSave.FrostShardUpgrade = 0;
+        userSave.FrostShardAmmo = 10;
         userSave.FirstSelectedGun = "Fireblaster";
-        userSave.SecondSelectedGun = "Gun2";
+        userSave.SecondSelectedGun = "Frost Shard";
         #endregion
         DontDestroyOnLoad(gameObject);
     }

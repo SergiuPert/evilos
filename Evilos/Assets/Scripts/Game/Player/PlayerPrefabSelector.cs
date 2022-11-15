@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerPrefabSelector : MonoBehaviour
 {
-    public List<GameObject> playerPrefabs;
+    [SerializeField]
+    private List<GameObject> playerPrefabs;
     // Start is called before the first frame update
     void Start()
     {
