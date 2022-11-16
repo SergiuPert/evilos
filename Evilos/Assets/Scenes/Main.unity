@@ -1242,7 +1242,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 18
+  orthographic size: 18.127802
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2376,7 +2376,7 @@ GameObject:
   - component: {fileID: 1365859609}
   - component: {fileID: 1365859608}
   m_Layer: 5
-  m_Name: Frost Shard
+  m_Name: FrostShardAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2832,6 +2832,14 @@ PrefabInstance:
       propertyPath: attackSpeed
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 1706036229, guid: 8c38d5142af160740a1efc9bf2a0cc54, type: 3}
+      propertyPath: spells.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706036229, guid: 8c38d5142af160740a1efc9bf2a0cc54, type: 3}
+      propertyPath: spells.Array.data[0]
+      value: 
+      objectReference: {fileID: 77923693442286337, guid: 31f688e50d2593d4fa30d51610a6998d, type: 3}
     - target: {fileID: 494123861850806553, guid: 8c38d5142af160740a1efc9bf2a0cc54, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -2878,7 +2886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6279891692048449375, guid: 8c38d5142af160740a1efc9bf2a0cc54, type: 3}
       propertyPath: m_Name
-      value: Fireblaster
+      value: FireblasterAmmo
       objectReference: {fileID: 0}
     - target: {fileID: 6279891692048449375, guid: 8c38d5142af160740a1efc9bf2a0cc54, type: 3}
       propertyPath: m_IsActive
@@ -3123,7 +3131,7 @@ GameObject:
   - component: {fileID: 1968357274}
   - component: {fileID: 1968357273}
   m_Layer: 5
-  m_Name: Fireblaster
+  m_Name: FireblasterAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3549,7 +3557,7 @@ GameObject:
   - component: {fileID: 2114682591}
   - component: {fileID: 2114682590}
   m_Layer: 5
-  m_Name: Frost Shard
+  m_Name: FrostShardAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3786,7 +3794,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5533835857685727631, guid: eba4cc129928cd84695f4fb77ddf3480, type: 3}
       propertyPath: m_Name
-      value: Frost Shard
+      value: FrostShardAmmo
       objectReference: {fileID: 0}
     - target: {fileID: 5533835857685727631, guid: eba4cc129928cd84695f4fb77ddf3480, type: 3}
       propertyPath: m_IsActive
@@ -3871,6 +3879,8 @@ MonoBehaviour:
   attackAnimation: ShootMainHand
   attackSpeed: 0.5
   manaCost: 0
+  spells:
+  - {fileID: 77923693442286337, guid: 31f688e50d2593d4fa30d51610a6998d, type: 3}
 --- !u!1 &1647664285048935136
 GameObject:
   m_ObjectHideFlags: 0
@@ -3996,6 +4006,14 @@ PrefabInstance:
       propertyPath: Cam
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 6915792879204362178, guid: 817a0e9ee46c33a469ba7c49ec91775a, type: 3}
+      propertyPath: spells.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915792879204362178, guid: 817a0e9ee46c33a469ba7c49ec91775a, type: 3}
+      propertyPath: spells.Array.data[0]
+      value: 
+      objectReference: {fileID: 77923693442286337, guid: 31f688e50d2593d4fa30d51610a6998d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 817a0e9ee46c33a469ba7c49ec91775a, type: 3}
 --- !u!4 &2210392777011041878 stripped
@@ -4106,6 +4124,14 @@ PrefabInstance:
       propertyPath: Cam
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 1271291843, guid: c2d9da7b47686a84f9ca014fe08e8a5a, type: 3}
+      propertyPath: spells.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1271291843, guid: c2d9da7b47686a84f9ca014fe08e8a5a, type: 3}
+      propertyPath: spells.Array.data[0]
+      value: 
+      objectReference: {fileID: 77923693442286337, guid: 31f688e50d2593d4fa30d51610a6998d, type: 3}
     - target: {fileID: 2792476192055404404, guid: c2d9da7b47686a84f9ca014fe08e8a5a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -4713,6 +4739,14 @@ PrefabInstance:
       propertyPath: Cam
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 8216867709135918857, guid: 2f5bdbd5f580b794b98c963c940bd581, type: 3}
+      propertyPath: spells.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216867709135918857, guid: 2f5bdbd5f580b794b98c963c940bd581, type: 3}
+      propertyPath: spells.Array.data[0]
+      value: 
+      objectReference: {fileID: 77923693442286337, guid: 31f688e50d2593d4fa30d51610a6998d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f5bdbd5f580b794b98c963c940bd581, type: 3}
 --- !u!4 &6314414864763875288 stripped
@@ -5065,6 +5099,14 @@ PrefabInstance:
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 8348978622281355092}
+    - target: {fileID: 989190895705260944, guid: f4cbea093a97e6c4b9c95df9fabb1125, type: 3}
+      propertyPath: spells.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 989190895705260944, guid: f4cbea093a97e6c4b9c95df9fabb1125, type: 3}
+      propertyPath: spells.Array.data[0]
+      value: 
+      objectReference: {fileID: 77923693442286337, guid: 31f688e50d2593d4fa30d51610a6998d, type: 3}
     - target: {fileID: 4724972242804749439, guid: f4cbea093a97e6c4b9c95df9fabb1125, type: 3}
       propertyPath: m_Name
       value: PlayerStaff4
@@ -5145,6 +5187,14 @@ PrefabInstance:
       propertyPath: Cam
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 190678989344514158, guid: 30a0fa534f3970642ac4ff4a3f8ac403, type: 3}
+      propertyPath: spells.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 190678989344514158, guid: 30a0fa534f3970642ac4ff4a3f8ac403, type: 3}
+      propertyPath: spells.Array.data[0]
+      value: 
+      objectReference: {fileID: 77923693442286337, guid: 31f688e50d2593d4fa30d51610a6998d, type: 3}
     - target: {fileID: 1414356255451164566, guid: 30a0fa534f3970642ac4ff4a3f8ac403, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -5217,7 +5267,7 @@ GameObject:
   - component: {fileID: 8300754736798341242}
   - component: {fileID: 1777531596208790245}
   m_Layer: 5
-  m_Name: Fireblaster
+  m_Name: FireblasterAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -103,17 +103,7 @@ public class GameUIManager : MonoBehaviour
 
     private void InitiateAmmo(string ammoType, TextMeshProUGUI text)
     {
-        switch (ammoType)
-        {
-            case "Fireblaster":
-                text.text = GameManager.Instance.userSave.FireblasterAmmo.ToString();
-                break;
-            case "Frost Shard":
-                text.text = GameManager.Instance.userSave.FrostShardAmmo.ToString();
-                break;
-            default:
-                return;
-        }
+        text.text = GameManager.Instance.extendedUserSave.Ammos[ammoType].ToString();
     }
 
     public void UpdateAmmo()
@@ -147,9 +137,6 @@ public class GameUIManager : MonoBehaviour
             }
         }
     }
-
-
-
     public void GameStart()
     {
         GameManager.Instance.gameRunning = true;

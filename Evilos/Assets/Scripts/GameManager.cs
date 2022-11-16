@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static event SceneChange sceneChange;
 
     public UserSave userSave = new UserSave();
+    public ExtendedUserSave extendedUserSave;
     public bool gameRunning = false;
     public bool isSecondaryLoad;
     public int missileIndex = 0;
@@ -31,9 +32,10 @@ public class GameManager : MonoBehaviour
         userSave.FireblasterAmmo = 40;
         userSave.FrostShardUpgrade = 0;
         userSave.FrostShardAmmo = 10;
-        userSave.FirstSelectedGun = "Fireblaster";
-        userSave.SecondSelectedGun = "Frost Shard";
+        userSave.FirstSelectedGun = "FireblasterAmmo";
+        userSave.SecondSelectedGun = "FrostShardAmmo";
         #endregion
+        extendedUserSave = new ExtendedUserSave();
         DontDestroyOnLoad(gameObject);
     }
 
