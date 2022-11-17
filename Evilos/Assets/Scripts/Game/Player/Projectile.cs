@@ -60,7 +60,7 @@ public class Projectile : MonoBehaviour
     {
         if (speed != 0)
         {
-            rb.velocity = transform.forward * speed;     
+            rb.velocity = transform.forward * speed;   //time delta time  
         }
     }
 

@@ -34,6 +34,16 @@ public class GameManager : MonoBehaviour
         userSave.FrostShardAmmo = 10;
         userSave.FirstSelectedGun = "FireblasterAmmo";
         userSave.SecondSelectedGun = "FrostShardAmmo";
+        userSave.ElectricShockUpgrade = 0;
+        userSave.ElectricShockScrolls = 5;
+        userSave.DragonRoarUpgrade = 0;
+        userSave.DragonRoarScrolls = 30;
+        userSave.CursedRingUpgrade = 0;
+        userSave.CursedRingScrolls = 7;
+        userSave.ThirdSelectedSpell = "ElectricShockScrolls";
+        userSave.FourthSelectedSpell = "CursedRingScrolls";
+        userSave.FirstSelectedSpell = "DragonRoarScrolls";
+
         #endregion
         extendedUserSave = new ExtendedUserSave();
         DontDestroyOnLoad(gameObject);

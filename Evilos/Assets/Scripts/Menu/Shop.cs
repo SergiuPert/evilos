@@ -57,6 +57,7 @@ public class Shop : MonoBehaviour
 
     private void Start()
     {
+        MenuUIManager.updateCostColors += UpdateCostColors;
         mainWeaponSprites[GameManager.Instance.userSave.MainWeaponUpgrade / 6].gameObject.SetActive(true);
         UpdateShopItems();
         UpdateSelectedWeapons();
@@ -147,7 +148,7 @@ public class Shop : MonoBehaviour
         {
             mainWeaponUpgradeText.text = "Upgrade";
         }
-        UpdateCostColors();
+        MenuUIManager.Instance.UpdateCostColors();
     }
 
     private void UpdateWeaponInfo(int gameManagerUpgradeLevel, TextMeshProUGUI upgradeCost, int[] upgradeCosts, TextMeshProUGUI upgradeText, Button upgradeButton)
@@ -167,7 +168,7 @@ public class Shop : MonoBehaviour
         {
             upgradeText.text = "Upgrade";
         }
-        UpdateCostColors();
+        MenuUIManager.Instance.UpdateCostColors();
     }
 
     private void UpdateAmmo(TextMeshProUGUI ammo, int gameManagerAmmo)
@@ -198,7 +199,7 @@ public class Shop : MonoBehaviour
         }
         GameManager.Instance.userSave.Gold -= price;
         weaponUpgradeLevel.value = gameManagerUpgradeLevel;
-        UpdateCostColors();
+        MenuUIManager.Instance.UpdateCostColors();
         return true;
     }
 
@@ -207,7 +208,7 @@ public class Shop : MonoBehaviour
         if (GameManager.Instance.userSave.Gold >= cost)
         {
             GameManager.Instance.userSave.Gold -= cost;
-            UpdateCostColors();
+            MenuUIManager.Instance.UpdateCostColors();
             return true;
         }
         return false;
@@ -234,7 +235,8 @@ public class Shop : MonoBehaviour
         bool hasPurchased = BuyAmmo(fireblasterAmmoCostVariable);
         if (hasPurchased)
         {
-            GameManager.Instance.userSave.FireblasterAmmo += fireblasterAmmoPackQuantity;
+            GameManager.Instance.extendedUserSave.Ammos["FireblasterAmmo"] += fireblasterAmmoPackQuantity;
+            GameManager.Instance.extendedUserSave.SaveAmmoData();
             fireblasterAmmo.text = GameManager.Instance.userSave.FireblasterAmmo.ToString();
         }
     }
@@ -260,7 +262,8 @@ public class Shop : MonoBehaviour
         bool hasPurchased = BuyAmmo(frostShardAmmoCostVariable);
         if (hasPurchased)
         {
-            GameManager.Instance.userSave.FrostShardAmmo += frostShardAmmoPackQuantity;
+            GameManager.Instance.extendedUserSave.Ammos["FrostShardAmmo"] += frostShardAmmoPackQuantity;
+            GameManager.Instance.extendedUserSave.SaveAmmoData();
             frostShardAmmo.text = GameManager.Instance.userSave.FrostShardAmmo.ToString();
         }
     }
@@ -288,7 +291,6 @@ public class Shop : MonoBehaviour
     {
         GameManager.Instance.userSave.FirstSelectedGun = null;
         firstWeaponSlotSprites.Where(sprite => sprite.gameObject.activeInHierarchy).FirstOrDefault().SetActive(false);
-        Debug.Log(GameManager.Instance.userSave.FirstSelectedGun);
     }
     public void UnequipSecondWeapon()
     {

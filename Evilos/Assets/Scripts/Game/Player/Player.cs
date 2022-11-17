@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     [SerializeField] private string attackAnimation;
     [SerializeField] private float attackSpeed;
     [SerializeField] private int manaCost;
-    [SerializeField] private List<GameObject> spells;
 
     private float lastAttack;
     private Animator animator;
@@ -26,17 +25,24 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1") && GameManager.Instance.gameRunning && GameUIManager.Instance.mana >= manaCost && lastAttack + attackSpeed < Time.time)
+        if (GameUIManager.Instance.spellSelected != 0 && Input.GetButtonDown("Fire1") && GameManager.Instance.gameRunning)
+        {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+            CastSpell();
+            GameUIManager.Instance.spellSelected = 0;
+            lastAttack = Time.time;
+        }
+        else if (Input.GetButton("Fire1") && GameManager.Instance.gameRunning && GameUIManager.Instance.mana >= manaCost && lastAttack + attackSpeed < Time.time)
         {
             if (EventSystem.current.IsPointerOverGameObject()) return; //needs testing on phone
             lastAttack = Time.time;
             Shoot(attackAnimation);
         }
-        if (Input.GetButtonDown("Fire2"))
-        {
-            CastSpell();
-            Debug.Log("Casted!");
-        }
+        //if (Input.GetButtonDown("Fire2"))
+        //{
+        //    CastSpell();
+        //    Debug.Log("Casted!");
+        //}
     }
 
     private void RotateFirePoint()
@@ -56,7 +62,6 @@ public class Player : MonoBehaviour
         RotateFirePoint();
         Instantiate(magicMissile, firePoint.position, firePoint.rotation);
         GameUIManager.Instance.mana -= manaCost;
-        //ConsumeAmmo();
     }
 
 
@@ -93,29 +98,44 @@ public class Player : MonoBehaviour
             GameManager.Instance.extendedUserSave.Ammos[gameObject.name] = 0;
             return false;
         }
-        GameManager.Instance.extendedUserSave.SaveData();
+        GameManager.Instance.extendedUserSave.SaveAmmoData();
         GameUIManager.Instance.UpdateAmmo();
         return true;
-
-        //if (gameObject.name == "Fireblaster" && GameManager.Instance.userSave.FireblasterAmmo > 0)
-        //{
-        //    GameManager.Instance.userSave.FireblasterAmmo--;
-        //}
-        //else if (gameObject.name == "Frost Shard" && GameManager.Instance.userSave.FrostShardAmmo > 0)
-        //{
-        //    GameManager.Instance.userSave.FrostShardAmmo--;
-        //}
-        //else return false;
-        //GameUIManager.Instance.UpdateAmmo();
-
-        //return true;
     }
 
     private void CastSpell()
     {
-        var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        position.z = -0.1f;
-        Quaternion rotation = Quaternion.Euler(-30,0,0);
-        Instantiate(spells[0], position, rotation);
+        bool hasScroll = ConsumeScroll();
+        if (hasScroll)
+        {
+            animator.SetTrigger("Cast");
+            GameObject spell = GameUIManager.Instance.spell;
+            Vector3 position = new Vector3(0, -4, -0.1f);
+            if (spell.CompareTag("CastAtClick"))
+            {
+                position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                position.z = -0.1f;
+            }
+            else if (spell.CompareTag("CastFromPlayer"))
+            {
+                position = new Vector3(-25, 0, -0.1f);
+            }
+            Quaternion rotation = new Quaternion(spell.transform.rotation.x, spell.transform.rotation.y, spell.transform.rotation.z, spell.transform.rotation.w);
+            Instantiate(spell, position, rotation);
+        }
     }
+    private bool ConsumeScroll()
+    {
+        string spellName = GameUIManager.Instance.spell.gameObject.name;
+        GameManager.Instance.extendedUserSave.Scrolls[spellName]--;
+        if (GameManager.Instance.extendedUserSave.Scrolls[spellName] < 0)
+        {
+            GameManager.Instance.extendedUserSave.Scrolls[spellName] = 0;
+            return false;
+        }
+        GameManager.Instance.extendedUserSave.SaveScrollsData();
+        GameUIManager.Instance.UpdateScrolls();
+        return true;
+    }
+
 }

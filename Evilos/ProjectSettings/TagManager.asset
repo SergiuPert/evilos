@@ -8,6 +8,9 @@ TagManager:
   - PlayerProjectile
   - Enemy
   - Canvas
+  - CastAtClick
+  - CastFromPlayer
+  - CastAtCenter
   layers:
   - Default
   - TransparentFX

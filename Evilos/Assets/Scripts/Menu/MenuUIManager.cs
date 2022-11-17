@@ -7,9 +7,10 @@ using UnityEngine.UI;
 
 public class MenuUIManager : MonoBehaviour
 {
-    //might be a good singleton
-    private static MenuUIManager Instance;
-
+    public delegate void CostColors();
+    public static event CostColors updateCostColors;
+    
+    public static MenuUIManager Instance;
 
     [SerializeField]
     List<GameObject> menuPanels;
@@ -63,13 +64,10 @@ public class MenuUIManager : MonoBehaviour
         mapGold.text = GameManager.Instance.userSave.Gold.ToString();
     }
 
-    //public void SwitchPanel(int index)
-    //{
-    //    menuPanels[currentIndex].SetActive(false);
-    //    currentIndex = index;
-    //    menuPanels[index].SetActive(true);
-    //}
-
+    public void UpdateCostColors()
+    {
+        updateCostColors();
+    }
     public void LoadScene(int selectedLevel)
     {
         //gameJustLaunched = false;
@@ -92,5 +90,8 @@ public class MenuUIManager : MonoBehaviour
             yield return null;
         }
     }
-
+    private void OnDestroy()
+    {
+        updateCostColors = null;
+    }
 }
