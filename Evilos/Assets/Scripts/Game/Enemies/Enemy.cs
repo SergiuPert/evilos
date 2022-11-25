@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Slider healthBar;
 
-
+    public float slow = 0;
     protected bool inRange = false;
     protected Animator animator;
     private Barrier home;
@@ -46,9 +46,15 @@ public class Enemy : MonoBehaviour
     {
         if (health > 0 && GameManager.Instance.gameRunning)
         {
+            float movementSpeed = speed - slow;
+            if (movementSpeed < 0)
+            {
+                movementSpeed = 0;
+            }
+            animator.speed = movementSpeed / speed; // optimize if possible
             if (!inRange)
             {
-                Move();
+                Move(movementSpeed);
             }
             else
             {
@@ -82,16 +88,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Move()
+    private void Move(float movementSpeed)
     {
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
+        
+        transform.Translate(Vector2.right * (movementSpeed) * Time.deltaTime);
     }
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, float slowDegree, float slowDuration)
     {
         health -= damage;
         healthBar.value = health/maxHealth;
+        if (slowDegree != 0)
+        {
+            StartCoroutine(SlowStatus(slowDegree, slowDuration));
+        }
         if (health <= 0)
         {
+            animator.speed = 1;
             Destroy(healthBar.transform.parent.gameObject);
             gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
             gameObject.tag = "Untagged";
@@ -99,6 +111,31 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("Die");
             GameUIManager.Instance.UpdateGold(goldValue);
             GameUIManager.Instance.CheckForWin();
+        }
+    }
+
+    IEnumerator SlowStatus(float slowDegree, float slowDuration)
+    {
+        float slowAmmount = speed * slowDegree;
+        //if (slow >= slowAmmount)
+        //{
+        //    slowAmmount = slow * slowDegree;
+        //}
+        slow += slowAmmount;
+        yield return new WaitForSeconds(slowDuration);
+        slow -= slowAmmount;
+    }
+
+    public IEnumerator DoT(float doT, float doTDuration)
+    {
+        while (doTDuration > 0 && health > 0)
+        {
+            TakeDamage(doT, 0, 0);
+            Vector3 position = transform.position;
+            position.y += 7;
+            DamagePopup.Create(position, (int)doT, false);
+            yield return new WaitForSeconds(1);
+            doTDuration -= 1;
         }
     }
 }

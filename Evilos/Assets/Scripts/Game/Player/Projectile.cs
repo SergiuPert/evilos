@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 15f;
-    [SerializeField]
-    private float hitOffset = 0f;
-    [SerializeField]
-    private GameObject hit;
-    [SerializeField]
-    private GameObject flash;
-    [SerializeField]
-    private GameObject[] Detached;
-    [SerializeField]
-    private float minDamage = 20;
-    [SerializeField]
-    private float maxDamage = 50;
-    [SerializeField]
-    private int critChance = 25;
-    
+    [SerializeField] private float speed = 15f;
+    [SerializeField] private float hitOffset = 0f;
+    [SerializeField] private GameObject hit;
+    [SerializeField] private GameObject flash;
+    [SerializeField] private GameObject[] Detached;
+    [SerializeField] private float minDamage = 20;
+    [SerializeField] private float maxDamage = 50;
+    [SerializeField] private int critChance = 25;
+    [SerializeField] private float slowDegree = 0;
+    [SerializeField] private float slowDuration = 0;
+    [SerializeField] private float doT = 0;
+    [SerializeField] private float doTDuration = 0;
+    [SerializeField] private GameObject aoE;
 
 
     private float damage;
@@ -77,8 +73,12 @@ public class Projectile : MonoBehaviour
             damage = Random.Range(minDamage, maxDamage);
             bool isCritical = Random.Range(0, 100) < critChance;
             if (isCritical) damage *= 2;
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(damage, slowDegree, slowDuration);
             DamagePopup.Create(transform.position, (int)damage, isCritical);
+            if (aoE != null)
+            {
+                aoE.gameObject.SetActive(true);
+            }
             //Lock all axes movement and rotation
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             speed = 0;

@@ -49623,6 +49623,7 @@ GameObject:
   - component: {fileID: 276140085834692477}
   - component: {fileID: 275625286251230375}
   - component: {fileID: 5157834699246785833}
+  - component: {fileID: 1047856282939895031}
   m_Layer: 0
   m_Name: ElectricShockScrolls
   m_TagString: CastAtClick
@@ -54538,3 +54539,16 @@ MonoBehaviour:
   minDamage: 45
   maxDamage: 55
   critChance: 25
+  slowDegree: 0
+  slowDuration: 0
+--- !u!210 &1047856282939895031
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77923693442286337}
+  m_Enabled: 1
+  m_SortingLayerID: 656801099
+  m_SortingLayer: 5
+  m_SortingOrder: 100

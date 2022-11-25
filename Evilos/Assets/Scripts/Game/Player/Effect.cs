@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
+    // to detach from parent and avoid being destroyed prematurely
     [SerializeField] private float effectTime;
-    // Start is called before the first frame update
     void Start()
     {
         transform.parent = null;

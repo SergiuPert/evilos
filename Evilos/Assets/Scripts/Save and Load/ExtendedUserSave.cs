@@ -50,12 +50,15 @@ public class ExtendedUserSave : UserSave
 public enum AmmoType
 {
     FrostShardAmmo,
-    FireblasterAmmo
+    FireblasterAmmo,
+    AcidBlobAmmo
 }
 
 public enum ScrollType
 {
     ElectricShockScrolls,
+    ChainsOfTormentScrolls,
+    FrostNovaScrolls,
     DragonRoarScrolls,
     CursedRingScrolls
 }

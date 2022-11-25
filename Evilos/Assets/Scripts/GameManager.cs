@@ -40,9 +40,12 @@ public class GameManager : MonoBehaviour
         userSave.DragonRoarScrolls = 30;
         userSave.CursedRingUpgrade = 0;
         userSave.CursedRingScrolls = 7;
+        userSave.ChainsOfTormentUpgrade = 4;
+        userSave.ChainsOfTormentScrolls = 13;
         userSave.ThirdSelectedSpell = "ElectricShockScrolls";
         userSave.FourthSelectedSpell = "CursedRingScrolls";
         userSave.FirstSelectedSpell = "DragonRoarScrolls";
+        userSave.SecondSelectedSpell = "ChainsOfTormentScrolls";
 
         #endregion
         extendedUserSave = new ExtendedUserSave();

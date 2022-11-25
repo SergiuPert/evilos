@@ -8,8 +8,10 @@ public class ProjectilePierceThrough : MonoBehaviour
     [SerializeField] private float minDamage;
     [SerializeField] private float maxDamage;
     [SerializeField] private float critChance;
-    
-    
+    [SerializeField] private float slowDegree = 0;
+    [SerializeField] private float slowDuration = 0;
+
+
     void FixedUpdate()
     {
         transform.Translate(Vector3.right * speed); //time delta time
@@ -28,7 +30,7 @@ public class ProjectilePierceThrough : MonoBehaviour
             float damage = Random.Range(minDamage, maxDamage);
             bool isCritical = Random.Range(0, 100) < critChance;
             if (isCritical) damage *= 2;
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(damage, slowDegree, slowDuration);
             DamagePopup.Create(collision.transform.position, (int)damage, isCritical);
         }
     }

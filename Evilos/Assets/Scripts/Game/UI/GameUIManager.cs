@@ -86,6 +86,19 @@ public class GameUIManager : MonoBehaviour
         InitiateScrolls(GameManager.Instance.userSave.ThirdSelectedSpell, thirdSpellScrolls);
         InitiateScrolls(GameManager.Instance.userSave.FourthSelectedSpell, fourthSpellScrolls);
     }
+    private void Update()
+    {
+        if (mana < 100)
+        {
+            mana += 10 * Time.deltaTime;
+            if (mana > 100)
+            {
+                mana = 100;
+            }
+            manaBar.value = mana;
+        }
+        //CheckForWin(); //could call this from the enemies when they die
+    }
 
     private void InitiateWeaponSprites()
     {
@@ -116,21 +129,6 @@ public class GameUIManager : MonoBehaviour
         {
             spriteContainer.SetActive(false);
         }
-    }
-    
-
-    private void Update()
-    {
-        if (mana < 100)
-        {
-            mana += 10 * Time.deltaTime;
-            if (mana > 100)
-            {
-                mana = 100;
-            }
-            manaBar.value = mana;
-        }
-        //CheckForWin(); //could call this from the enemies when they die
     }
 
     public void UpdateGold(int goldValue)

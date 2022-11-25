@@ -8,9 +8,15 @@ public class AoE : MonoBehaviour
     [SerializeField] float minDamage;
     [SerializeField] float maxDamage;
     [SerializeField] int critChance;
-    void Start()
+    [SerializeField] private float slowDegree = 0;
+    [SerializeField] private float slowDuration = 0;
+    [SerializeField] private float doT = 0;
+    [SerializeField] private float doTDuration = 0;
+    [SerializeField] private float delay = 0;
+    void OnEnable()
     {
-        DamageEnemies();
+        //DamageEnemies();
+        StartCoroutine(WaitForEffect());
     }
 
     protected void DamageEnemies()
@@ -24,9 +30,23 @@ public class AoE : MonoBehaviour
             Enemy enemy = collider.GetComponent<Enemy>();
             if (enemy != null)
             {
-                DamagePopup.Create(collider.transform.position, (int)damage, isCritical);
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(damage, slowDegree, slowDuration);
+                if (damage > 0)
+                {
+                    DamagePopup.Create(collider.transform.position, (int)damage, isCritical);
+                }
+                if (doT > 0)
+                {
+                    Debug.Log(enemy.gameObject.name);
+                    enemy.StartCoroutine(enemy.DoT(doT, doTDuration));
+                }
             }
         }
+    }
+
+    IEnumerator WaitForEffect()
+    {
+        yield return new WaitForSeconds(delay);
+        DamageEnemies();
     }
 }
