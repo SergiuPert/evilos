@@ -6,7 +6,7 @@ public class EnemyMelee : Enemy
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Home"))
+        if (collision.CompareTag("Barrier"))
         {
             inRange = true;
             animator.SetBool("Walking", false);
@@ -15,10 +15,15 @@ public class EnemyMelee : Enemy
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Home"))
+        if (collision.CompareTag("Barrier"))
         {
             inRange = false;
             animator.SetBool("Walking", true);
         }
+    }
+
+    protected override void Action()
+    {
+        Attack();
     }
 }

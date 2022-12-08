@@ -37,7 +37,6 @@ public class AoE : MonoBehaviour
                 }
                 if (doT > 0)
                 {
-                    Debug.Log(enemy.gameObject.name);
                     enemy.StartCoroutine(enemy.DoT(doT, doTDuration));
                 }
             }

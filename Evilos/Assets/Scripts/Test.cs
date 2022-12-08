@@ -12,7 +12,7 @@ public class Test : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("Existing");
+        Debug.DrawRay(transform.position, transform.right * 30, Color.red);
     }
     private void OnDestroy()
     {

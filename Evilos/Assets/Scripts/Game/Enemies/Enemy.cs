@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 4;
+    protected float speed = 4;
     [SerializeField]
-    private float attackSpeed = 1;
+    protected float attackSpeed = 1;
     [SerializeField]
     private float damage = 10;
     [SerializeField]
@@ -22,11 +22,11 @@ public class Enemy : MonoBehaviour
     public float slow = 0;
     protected bool inRange = false;
     protected Animator animator;
-    private Barrier home;
-    private float lastAttack = 0;
+    protected Barrier barrier;
+    protected float lastAttack = 0;
     private float maxHealth;
 
-    void Start()
+    protected void Start()
     {
         GameUIManager.startGame += StartGame;
         GameUIManager.stopGame += StopGame;
@@ -34,15 +34,15 @@ public class Enemy : MonoBehaviour
         maxHealth = health;
         animator = GetComponent<Animator>();
         
-        home = GameObject.Find("Home").GetComponent<Barrier>(); // create event for home to take damage
-        if (home == null)
+        barrier = GameObject.Find("Barrier").GetComponent<Barrier>(); // create event for home to take damage
+        if (barrier == null)
         {
-            Debug.Log("Home not found");
+            Debug.Log("Barrier not found");
         }
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (health > 0 && GameManager.Instance.gameRunning)
         {
@@ -58,20 +58,28 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                Attack();
+                Action();
             }
         }
     }
 
     public void StartGame()
     {
+        StartCoroutine(StartAnimation(1f));
+    }
+
+    IEnumerator StartAnimation(float maxWait)
+    {
+        float time = Random.Range(0f, maxWait);
+        yield return new WaitForSeconds(time);
         animator.SetTrigger("GameStart");
     }
+
     private void StopGame()
     {
         animator.SetTrigger("GameStop");
     }
-    private void Attack()
+    protected void Attack()
     {
         if (lastAttack + attackSpeed < Time.time)
         {
@@ -80,17 +88,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void DamageHome()
+    protected virtual void Action()
+    {
+
+    }
+
+    private void DamageBarrier()
     {
         if (inRange)
         {
-            home.TakeDamage(damage);
+            barrier.TakeDamage(damage);
         }
     }
 
-    private void Move(float movementSpeed)
+    protected void Move(float movementSpeed)
     {
-        
         transform.Translate(Vector2.right * (movementSpeed) * Time.deltaTime);
     }
     public void TakeDamage(float damage, float slowDegree, float slowDuration)
@@ -117,10 +129,6 @@ public class Enemy : MonoBehaviour
     IEnumerator SlowStatus(float slowDegree, float slowDuration)
     {
         float slowAmmount = speed * slowDegree;
-        //if (slow >= slowAmmount)
-        //{
-        //    slowAmmount = slow * slowDegree;
-        //}
         slow += slowAmmount;
         yield return new WaitForSeconds(slowDuration);
         slow -= slowAmmount;

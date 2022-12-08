@@ -11,11 +11,12 @@ TagManager:
   - CastAtClick
   - CastFromPlayer
   - CastAtCenter
+  - Barrier
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Barrier
   - Water
   - UI
   - Background
