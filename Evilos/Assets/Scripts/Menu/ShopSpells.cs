@@ -11,9 +11,12 @@ public class ShopSpells : MonoBehaviour
     [SerializeField] private List<GameObject> secondSpellSlotSprites = new List<GameObject>();
     [SerializeField] private List<GameObject> thirdSpellSlotSprites = new List<GameObject>();
     [SerializeField] private List<GameObject> fourthSpellSlotSprites = new List<GameObject>();
-    
+
+
+    // TODO: Try sending the GameManager as reference (Use "ref")
+
     #region Electric Shock
-    
+
     [Header("Electric Shock")]
 
     [SerializeField] private Slider electricShockUpgradeLevel;
@@ -79,6 +82,8 @@ public class ShopSpells : MonoBehaviour
 
     private int[] frostNovaUpgradeCosts = { 1500, 3000, 8000, 12000, 25000, 40000, 0 };
     private int frostNovaScrollsCostVariable = 400;
+
+
     private void UpdateFrostNovaInfo()
     {
         UpdateSpellInfo(GameManager.Instance.userSave.FrostNovaUpgrade, frostNovaUpgradeCost,

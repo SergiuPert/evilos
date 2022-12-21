@@ -101,22 +101,9 @@ public class EnemyRange : Enemy
     {
         if (lastAttack + attackSpeed < Time.time)
         {
-            //animator.SetTrigger("Shoot"); //optimize, make attack and shoot the same
-            //lastAttack = Time.time;
             StartCoroutine(AimAndFire());
-        }
-        //else if (idleAnimation != "none")
-        //{
-        //    StartCoroutine(PlayIdleAnimation());
-        //}
+        } // TODO: Play some animation if you cant attack
     }
-
-    //IEnumerator PlayIdleAnimation()
-    //{
-    //    animator.SetBool(idleAnimation, true);
-    //    yield return new WaitForSeconds(timeBetweenActions);
-    //    animator.SetBool(idleAnimation, false);
-    //}
 
     IEnumerator AimAndFire()
     {
